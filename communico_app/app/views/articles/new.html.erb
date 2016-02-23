@@ -1,0 +1,23 @@
+<h1>Add an Article</h1>
+<%= form_for @article do |f| %>
+  <% if @article.errors.any? %>
+    <div class = "error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @article.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :link %>
+    <%= f.text_field :link %>
+  </div>
+  <div class="actions"><%= f.submit %></div>
+<% end %>
