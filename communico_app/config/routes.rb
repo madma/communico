@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
   root "articles#index"
-  resources :users, except: [:destroy]
-  resources :articles
 
   resources :articles do
     # all the users of an article
     resources :users, only: [:index]
   end
 
-  resources :users do
+  resources :users, except: [:destroy] do
     # all the articles of a user
     resources :articles, only: [:index]
   end
