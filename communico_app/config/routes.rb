@@ -3,6 +3,19 @@ Rails.application.routes.draw do
   resources :users, except: [:destroy]
   resources :articles
 
+  resources :articles do
+    # all the users of an article
+    resources :users, only: [:index]
+  end
+
+  resources :users do
+    # all the articles of a user
+    resources :articles, only: [:index]
+  end
+
+  # generate the routes to CRUD subjects
+  resources :subjects
+
   # customized url for login
   resources :sessions, only: [:new, :create, :destroy]
   get "/login", to: "sessions#new"

@@ -3,4 +3,7 @@ class User < ActiveRecord::Base
   # Verify that an email exists and that it is unique in the db
   validates :email, presence: true, uniqueness: true
   # TODO: validate password length, etc.
+
+  has_many :subjects
+  has_many :articles, through: :subjects
 end
