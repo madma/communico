@@ -6,10 +6,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(self.user_params)
     if @user.save
-      # line below automatically logs in a new user
-      session[:user_id] = @user.id
-      flash[:notice] = "You have successfully signed up!"
-      redirect_to root_path
+      self.auto_login
     else
       render "new"
     end
@@ -33,4 +30,10 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :username, :password, :password_confirmation)
   end
+
+  def auto_login(*@user)
+      # line below automatically logs in a new user
+      session[:user_id] = @user.id
+      flash[:notice] = "You have successfully signed up!"
+      redirect_to root_path
 end
