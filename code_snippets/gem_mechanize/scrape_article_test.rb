@@ -1,4 +1,5 @@
 require 'mechanize'
+require 'pry'
 
 mechanize = Mechanize.new
 
@@ -20,6 +21,8 @@ puts title
 puts description
 puts image
 puts section
+
+binding.pry
 
 tags.each do |tag|
   puts tag["content"]

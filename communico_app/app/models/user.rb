@@ -5,5 +5,5 @@ class User < ActiveRecord::Base
   # TODO: validate password length, etc.
 
   has_many :subjects
-  has_many :articles, through: :subjects
+  has_many :articles, -> { distinct }, through: :subjects
 end

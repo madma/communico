@@ -8,15 +8,38 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new
     # TODO: get the validated link from the user article#new form
-    new_form_link = self.article_params[:link]
+    new_form_link = params[:link]
     mechanize = Mechanize.new
     doc = mechanize.get(new_form_link)
+
     link        = doc.at("[property='og:url']")["content"]
     type        = doc.at("[property='og:type']")["content"]
     title       = doc.at("[property='og:title']")["content"]
     description = doc.at("[property='og:description']")["content"]
     image       = doc.at("[property='og:image']")["content"]
     section     = doc.at("[property='article:section']")["content"]
+    tags    = doc.search("[property='article:tag']")
+
+    subjects = []
+    subject_ids = []
+
+    tags.each do |tag|
+      subjects << tag.strip.downcase
+    end
+
+    unless subjects.empty?
+      subjects.each do |subject|
+        subject = Subject.where(name: subject).first_or_create!
+        subject_ids << topic.id
+      end
+    end
+
+    # assign all available attribute values to the article
+    @article.title = title.strip
+    @article.link = link.strip
+    @article.thumbnail_img = image.strip
+    @article.
+
 
     binding.pry
     # TODO: get the page at the link url
@@ -33,6 +56,8 @@ class ArticlesController < ApplicationController
     else
       render :new
     end
+
+    binding.pry
   end
 
   def index
@@ -66,7 +91,7 @@ class ArticlesController < ApplicationController
 
   #  HELPER METHODS
   def article_params
-    params.require(:article).permit(:title, :author, :publisher, :link, :text, :published_on, :thumbnail_img, :section)
+    params.require(:article).permit(:title, :author, :publisher, :link, :text, :published_on, :thumbnail_img, :section, :user_ids)
   end
 
 end

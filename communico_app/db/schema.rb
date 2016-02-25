@@ -30,10 +30,12 @@ ActiveRecord::Schema.define(version: 20160224020420) do
   end
 
   create_table "subjects", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "auto_generated"
     t.integer  "article_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   add_index "subjects", ["article_id"], name: "index_subjects_on_article_id", using: :btree
