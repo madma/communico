@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224020420) do
+ActiveRecord::Schema.define(version: 20160225211926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,17 +29,23 @@ ActiveRecord::Schema.define(version: 20160224020420) do
     t.datetime "updated_at",    null: false
   end
 
-  create_table "subjects", force: :cascade do |t|
-    t.string   "name"
-    t.boolean  "auto_generated"
-    t.integer  "article_id"
-    t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+  create_table "articles_users", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "user_id"
   end
 
-  add_index "subjects", ["article_id"], name: "index_subjects_on_article_id", using: :btree
-  add_index "subjects", ["user_id"], name: "index_subjects_on_user_id", using: :btree
+  add_index "articles_users", ["article_id"], name: "index_articles_users_on_article_id", using: :btree
+  add_index "articles_users", ["user_id"], name: "index_articles_users_on_user_id", using: :btree
+
+  create_table "subjects", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "subjects", ["taggable_type", "taggable_id"], name: "index_subjects_on_taggable_type_and_taggable_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -51,6 +57,6 @@ ActiveRecord::Schema.define(version: 20160224020420) do
     t.datetime "updated_at",      null: false
   end
 
-  add_foreign_key "subjects", "articles"
-  add_foreign_key "subjects", "users"
+  add_foreign_key "articles_users", "articles"
+  add_foreign_key "articles_users", "users"
 end

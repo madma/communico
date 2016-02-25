@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new
     # TODO: get the validated link from the user article#new form
-    new_form_link = params[:link]
+    new_form_link = article_params[:link]
     mechanize = Mechanize.new
     doc = mechanize.get(new_form_link)
 
@@ -24,13 +24,13 @@ class ArticlesController < ApplicationController
     subject_ids = []
 
     tags.each do |tag|
-      subjects << tag.strip.downcase
+      subjects << tag["content"].strip.downcase
     end
 
     unless subjects.empty?
       subjects.each do |subject|
         subject = Subject.where(name: subject).first_or_create!
-        subject_ids << topic.id
+        subject_ids << subject.id
       end
     end
 
@@ -38,10 +38,11 @@ class ArticlesController < ApplicationController
     @article.title = title.strip
     @article.link = link.strip
     @article.thumbnail_img = image.strip
-    @article.
+    @article.subject_ids = subject_ids
+    @article.users << current_user
 
 
-    binding.pry
+    # binding.pry
     # TODO: get the page at the link url
     # TODO: parse the page at the url for article attributes
     # TODO: set the article attributes

@@ -4,6 +4,6 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
   # TODO: validate password length, etc.
 
-  has_many :subjects
-  has_many :articles, -> { distinct }, through: :subjects
+  has_many :subjects, as: :taggable
+  has_and_belongs_to_many :articles
 end

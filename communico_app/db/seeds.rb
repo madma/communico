@@ -28,8 +28,8 @@ user_two = User.create(
   password_confirmation: "usertwo"
 )
 
-article_one = Article.create(
-  link: "this is a link",
-  title: "this is a title",
+# article_one = Article.create(
+#   link: "this is a link",
+#   title: "this is a title",
 
-)
+# )
