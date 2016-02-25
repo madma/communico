@@ -11,5 +11,5 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 %w( articles sessions users ).each do |controller|
-Rails.application.config.assets.precompile += %W( #{controller}.js #{controller}.css ) # uppercase allows interpolation and escaped characters; returns array of strings
+Rails.application.config.assets.precompile += %W( #{controller}.js #{controller}.css ) # uppercase allows interpolation and escaped characters
 end

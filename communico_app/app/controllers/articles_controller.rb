@@ -6,8 +6,19 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(self.article_params)
+    @article = Article.new
     # TODO: get the validated link from the user article#new form
+    new_form_link = self.article_params[:link]
+    mechanize = Mechanize.new
+    doc = mechanize.get(new_form_link)
+    link        = doc.at("[property='og:url']")["content"]
+    type        = doc.at("[property='og:type']")["content"]
+    title       = doc.at("[property='og:title']")["content"]
+    description = doc.at("[property='og:description']")["content"]
+    image       = doc.at("[property='og:image']")["content"]
+    section     = doc.at("[property='article:section']")["content"]
+
+    binding.pry
     # TODO: get the page at the link url
     # TODO: parse the page at the url for article attributes
     # TODO: set the article attributes
