@@ -28,9 +28,9 @@ module ArticlesHelper
     link        = get_meta_property(doc, "og:url")
     type        = get_meta_property(doc, "og:type")
     title       = get_meta_property(doc, "og:title")
-    description = get_meta_property(doc, "og:description")
+    section     = get_meta_property(doc, "og:description")
     image       = get_meta_property(doc, "og:image")
-    section     = get_meta_property(doc, "article:section")
+    # section     = get_meta_property(doc, "article:section")
     subjects    = get_meta_properties(doc, "article:tag")
 
     subject_ids = []
@@ -47,6 +47,7 @@ module ArticlesHelper
       title:         title,
       link:          link,
       thumbnail_img: image,
+      section:       section,
       subject_ids:   subject_ids
     }
   end

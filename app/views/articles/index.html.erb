@@ -1,27 +1,15 @@
 <h1>All Articles</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Link</th>
-      <th>Subject(s)</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @articles.each do |article| %>
-      <tr>
-        <td><%= article.title %></td>
-        <td><%= article.link %></td>
-        <td><%= article.subject_ids %></td>
-        <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="flex_container" id="articles_container">
+  <% @articles.each do |article| %>
+  <div class="flex_item" id="article_box">
+    <div class="article_card">
+      <div class="article_item" id="title"><a href="<%= article.link %>"><%= article.title %></a></div>
+      <div class="article_item" id="image"><img src="<%= article.thumbnail_img %>" alt=""></div>
+      <div class="article_item" id="description"><p><%= article.section %></p></div>
+    </div>
+  </div>
+<% end %>
+</div>
 
 <br>
 
