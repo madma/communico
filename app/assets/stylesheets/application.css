@@ -12,3 +12,26 @@
  *
  *= require_self
  */
+html, body {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  background-color: #272822;
+  color: #FFFFFF;
+}
+
+:link {
+  color: #FFFFFF;
+}
+
+:visited {
+    color: #FFFFFF;
+}
+
+/* mouse over link */
+:hover {
+    color: #FFFFFF;
+}
+
+/* selected link */
+:active {
+    color: #FFFFFF
+  }

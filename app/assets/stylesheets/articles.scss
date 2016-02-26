@@ -18,10 +18,11 @@
 
 .article_card {
   width: 300px;
-  border: 1px solid red;
+  border: 1px solid white;
   border-radius: 10px;
   padding: 20px;
   vertical-align: top;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .article_item img {
