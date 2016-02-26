@@ -1,44 +1,14 @@
 class ArticlesController < ApplicationController
   before_action :authorize, except: [:index, :show]
 
+  include ArticlesHelper
+
   def new
     @article = Article.new
   end
 
   def create
-    @article = Article.new
-    # TODO: get the validated link from the user article#new form
-    new_form_link = article_params[:link]
-    mechanize = Mechanize.new
-    doc = mechanize.get(new_form_link)
-
-    link        = doc.at("[property='og:url']")["content"]
-    type        = doc.at("[property='og:type']")["content"]
-    title       = doc.at("[property='og:title']")["content"]
-    description = doc.at("[property='og:description']")["content"]
-    image       = doc.at("[property='og:image']")["content"]
-    section     = doc.at("[property='article:section']")["content"]
-    tags    = doc.search("[property='article:tag']")
-
-    subjects = []
-    subject_ids = []
-
-    tags.each do |tag|
-      subjects << tag["content"].strip.downcase
-    end
-
-    unless subjects.empty?
-      subjects.each do |subject|
-        subject = Subject.where(name: subject).first_or_create!
-        subject_ids << subject.id
-      end
-    end
-
-    # assign all available attribute values to the article
-    @article.title = title.strip
-    @article.link = link.strip
-    @article.thumbnail_img = image.strip
-    @article.subject_ids = subject_ids
+    @article = Article.new generate_article_metadata(article_params[:link])
     @article.users << current_user
 
 
@@ -57,8 +27,6 @@ class ArticlesController < ApplicationController
     else
       render :new
     end
-
-    binding.pry
   end
 
   def index
